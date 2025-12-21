@@ -4,16 +4,16 @@ class Lazyqmk < Formula
   version "0.12.2"
   if OS.mac? && Hardware::CPU.arm?
     url "https://github.com/Radialarray/LazyQMK/releases/download/v0.12.2/lazyqmk-aarch64-apple-darwin.tar.xz"
-    sha256 "a7aa50d7ee5475b2b3eb66f13d65d91d231345c46d866885cd67bc8eb60c7d62"
+    sha256 "bf2ed842de138fdab0e73a65d5125af925ad04d6eba560c93dc7262da530dc53"
   end
   if OS.linux?
     if Hardware::CPU.arm?
       url "https://github.com/Radialarray/LazyQMK/releases/download/v0.12.2/lazyqmk-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "93b3fc3dba64dd4d2e1b9cfb78335adc925c6e64a4d9f448da4d74373d7108a2"
+      sha256 "1e49b2c1d7dbdb0eb4a84733f4039a67c6f82fa888b2e2a5d005f1a11feeda37"
     end
     if Hardware::CPU.intel?
       url "https://github.com/Radialarray/LazyQMK/releases/download/v0.12.2/lazyqmk-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "0d8fd2dc4c4bfe795a191d4eafc73773552f9c4bfcb79e7a04561dafae807bef"
+      sha256 "16da127b866d136c7d051477cd2d809c11fe76e4a1706fb5e873f36417c23abc"
     end
   end
   license "MIT"
