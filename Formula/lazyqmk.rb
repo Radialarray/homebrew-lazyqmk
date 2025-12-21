@@ -1,31 +1,58 @@
 class Lazyqmk < Formula
-  desc "Interactive terminal workspace for QMK firmware"
+  desc "Interactive terminal workspace for QMK firmware for mechanical keyboards"
   homepage "https://github.com/Radialarray/LazyQMK"
-  version "0.12.1"
-  license "MIT"
-
-  on_macos do
+  version "0.12.2"
+  if OS.mac? && Hardware::CPU.arm?
+    url "https://github.com/Radialarray/LazyQMK/releases/download/v0.12.2/lazyqmk-aarch64-apple-darwin.tar.xz"
+    sha256 "149ab260adbccfff0c43fc83713210cb4148ce697d2c11aca9f81dc49bf2b8eb"
+  end
+  if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/Radialarray/LazyQMK/releases/download/v#{version}/lazyqmk-macos-aarch64.zip"
-      sha256 "3040c924cb146ffe0e0b9e5c77a9e5dc90be8b4cb315502b0823e4f6b8731af4"
+      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.12.2/lazyqmk-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "e1a5dd80c3dbfd2c280fffc9b0a927ba1fab01f02d6b377f309742cb3307ebb6"
+    end
+    if Hardware::CPU.intel?
+      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.12.2/lazyqmk-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "550cfdc67151a9d1772a2583bea1f641884cba61a417d58defc1a84c62906b5b"
     end
   end
+  license "MIT"
 
-  on_linux do
-    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/Radialarray/LazyQMK/releases/download/v#{version}/lazyqmk-linux-aarch64.zip"
-      sha256 "03e5f1dfe3485c08f7e96618b5dca3960f8d999a2fd414d7d99c6578bd8c0393"
-    else
-      url "https://github.com/Radialarray/LazyQMK/releases/download/v#{version}/lazyqmk-linux-x86_64.zip"
-      sha256 "bd420fe35da364cb0720d3f328d96d06fbcba27a62e2945601268243e220a7c4"
+  BINARY_ALIASES = {
+    "aarch64-apple-darwin":      {},
+    "aarch64-unknown-linux-gnu": {},
+    "x86_64-pc-windows-gnu":     {},
+    "x86_64-unknown-linux-gnu":  {},
+  }.freeze
+
+  def target_triple
+    cpu = Hardware::CPU.arm? ? "aarch64" : "x86_64"
+    os = OS.mac? ? "apple-darwin" : "unknown-linux-gnu"
+
+    "#{cpu}-#{os}"
+  end
+
+  def install_binary_aliases!
+    BINARY_ALIASES[target_triple.to_sym].each do |source, dests|
+      dests.each do |dest|
+        bin.install_symlink bin/source.to_s => dest
+      end
     end
   end
 
   def install
-    bin.install "lazyqmk"
-  end
+    bin.install "lazyqmk" if OS.mac? && Hardware::CPU.arm?
+    bin.install "lazyqmk" if OS.linux? && Hardware::CPU.arm?
+    bin.install "lazyqmk" if OS.linux? && Hardware::CPU.intel?
 
-  test do
-    system "#{bin}/lazyqmk", "--version"
+    install_binary_aliases!
+
+    # Homebrew will automatically install these, so we don't need to do that
+    doc_files = Dir["README.*", "readme.*", "LICENSE", "LICENSE.*", "CHANGELOG.*"]
+    leftover_contents = Dir["*"] - doc_files
+
+    # Install any leftover files in pkgshare; these are probably config or
+    # sample files.
+    pkgshare.install(*leftover_contents) unless leftover_contents.empty?
   end
 end
