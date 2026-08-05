@@ -1,19 +1,19 @@
 class Lazyqmk < Formula
   desc "Interactive terminal workspace for QMK firmware for mechanical keyboards"
   homepage "https://github.com/Radialarray/LazyQMK"
-  version "0.26.4"
+  version "0.26.5"
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/Radialarray/LazyQMK/releases/download/v0.26.4/lazyqmk-aarch64-apple-darwin.tar.xz"
-    sha256 "d0870787dd157cc389af65f565b3b8b85ebce6e82ec571c06299ebcc403604a2"
+    url "https://github.com/Radialarray/LazyQMK/releases/download/v0.26.5/lazyqmk-aarch64-apple-darwin.tar.xz"
+    sha256 "0e256889692d642337ae05f6a2e59b1234053da2f20eb623f3934de236161ce0"
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.26.4/lazyqmk-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "f4e9bafe7b913ecfefb569d17acadba73ab5b25dd9254061973ccd19fcbc0da2"
+      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.26.5/lazyqmk-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "4fc64ff7a51f7033d730c94ece1918b3328e1d707c5930628ba843d634fb2322"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.26.4/lazyqmk-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "b882b1cd09997db319e9eff2dc67ca64d53c98c5b002fdb576730fe262c3c732"
+      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.26.5/lazyqmk-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "76208a0addf5541c82fc5350d1aa8be3ae698317da3963dee1809403bb8d6071"
     end
   end
   license "MIT"
