@@ -1,19 +1,19 @@
 class Lazyqmk < Formula
   desc "Interactive terminal workspace for QMK firmware for mechanical keyboards"
   homepage "https://github.com/Radialarray/LazyQMK"
-  version "0.27.2"
+  version "0.27.3"
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/Radialarray/LazyQMK/releases/download/v0.27.2/lazyqmk-aarch64-apple-darwin.tar.xz"
-    sha256 "c454a86882895702d1e1bc9776f528366e7846ba921ec42369adc43573449927"
+    url "https://github.com/Radialarray/LazyQMK/releases/download/v0.27.3/lazyqmk-aarch64-apple-darwin.tar.xz"
+    sha256 "8db44f1fddef996a44977f439e2a9b8da3f5ccde239d10f6407bedc860b3fd3d"
   end
   if OS.linux?
     if Hardware::CPU.arm?
-      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.27.2/lazyqmk-aarch64-unknown-linux-gnu.tar.xz"
-      sha256 "c149e397728f0adc51d89715257f2941b01b8043c3cee73d07e9374b28bab31f"
+      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.27.3/lazyqmk-aarch64-unknown-linux-gnu.tar.xz"
+      sha256 "80343914cf7e537fbaf6ec6669aba5d924a531a2cd57ebb48639ab45db245d67"
     end
     if Hardware::CPU.intel?
-      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.27.2/lazyqmk-x86_64-unknown-linux-gnu.tar.xz"
-      sha256 "cc32a39202fefae5ba4581015fa0814c18d15d3314f2c32819d8c2d81020f50c"
+      url "https://github.com/Radialarray/LazyQMK/releases/download/v0.27.3/lazyqmk-x86_64-unknown-linux-gnu.tar.xz"
+      sha256 "3b26085e2aeede1d4f931c9e372c00fb7a455b3f9bbbbf6dcc3c4fddc26f1d6c"
     end
   end
   license "MIT"
@@ -41,9 +41,15 @@ class Lazyqmk < Formula
   end
 
   def install
-    bin.install "lazyqmk" if OS.mac? && Hardware::CPU.arm?
-    bin.install "lazyqmk" if OS.linux? && Hardware::CPU.arm?
-    bin.install "lazyqmk" if OS.linux? && Hardware::CPU.intel?
+    if OS.mac? && Hardware::CPU.arm?
+      bin.install "lazyqmk"
+    end
+    if OS.linux? && Hardware::CPU.arm?
+      bin.install "lazyqmk"
+    end
+    if OS.linux? && Hardware::CPU.intel?
+      bin.install "lazyqmk"
+    end
 
     install_binary_aliases!
 
